@@ -22,14 +22,14 @@ function startConnect() {
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
 
+    
     client.connect({
         onSuccess: onConnect,
-        onFailure: (err) => {
-            alert("Connction Faile: " + err.errorMessage);
-            console.error(err);
-        },
-        useSSL: false
+        onFailure: (err) => alert("Connection Failed: " + err.errorMessage),
+        useSSL: true,  // MUST be true for port 8081 on HTTPS sites
+        timeout: 3     // Optional: gives up faster if it can't connect
     });
+
 }
 
 function onConnect() {
