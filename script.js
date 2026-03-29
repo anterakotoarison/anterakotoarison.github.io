@@ -14,22 +14,26 @@ function toggleConnection() {
 }
 
 function startConnect() {
-    const host = document.getElementById('host').ariaValueMax;
-    const port = parseInt(document.getElementById('port').value);
-    const clientId = "geo_client_" + Math.random().toString(16).substring(2,8);
+    const host = "test.mosquitto.org"; // Hardcode for a quick test
+    const port = 8081;                // The WSS (Secure) port
+    const clientId = "uofc_client_" + Math.random().toString(16).substr(2, 8);
 
     client = new Paho.MQTT.Client(host, port, clientId);
+
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
 
-    
-    client.connect({
+    const options = {
+        useSSL: true,                 // CRITICAL: GitHub Pages requires this
+        timeout: 3,
         onSuccess: onConnect,
-        onFailure: (err) => alert("Connection Failed: " + err.errorMessage),
-        useSSL: true,  // MUST be true for port 8081 on HTTPS sites
-        timeout: 3     // Optional: gives up faster if it can't connect
-    });
+        onFailure: (err) => {
+            console.error("Connection Failed:", err);
+            alert("Error: " + err.errorMessage + ". Try using Cellular Data.");
+        }
+    };
 
+    client.connect(options);
 }
 
 function onConnect() {
