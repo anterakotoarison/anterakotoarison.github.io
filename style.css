@@ -1,0 +1,22 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 15px;
+    background-color: blanchedalmond;
+}
+
+h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px;
+    background: whitesmoke;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
