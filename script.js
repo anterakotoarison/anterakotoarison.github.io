@@ -59,9 +59,31 @@ function updateUI(connected) {
 
     status.innerText = connected ? "Status: Connected" : "Status: Disconnected";
     status.className = connected ? "status-connected" : "status-disconnected";
-    connectBtn.innerText = connected ? "End Connection" : "Start Connection"'
+    connectBtn.innerText = connected ? "End Connection" : "Start Connection";
 
     document.getElementById('shareBtn').disabled = !connected;
     document.getElementById('host').disabled = connected;
     document.getElementbyId('port').disabled = connected;
+}
+
+function shareStatus() {
+    if (!navigator.geolocation) return alert("Geolocation not supported");
+
+    navigator.geolocation.getCurrentPosition((pos) => {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+
+        const temp = (Math.random() * 100 - 40).toFixed(1); //random temp
+
+        const geojson = {
+            "type": "Feature",
+            "geometry": {"type": "Point", "coordinates": [lon, lat]},
+            "properties": {"temperature" : parseFloat(temp)}
+        };
+
+        const message = new Paho.MQTT.Message(JSON.stringify(geojson));
+        message.destinationName = topic;
+        client.send(message);
+
+    }, (err) => alert("Error getting location: " + err.message));
 }
