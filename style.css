@@ -20,3 +20,46 @@ h2 {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+.connection-settings, .actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex: 1;
+    min-width: 120px;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: cornflowerblue;
+    color: whitesmoke;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #ccc;
+}
+
+#statusMsg {
+    align-self: center;
+    font-size: 0.9em;
+}
+
+.status-connected { color: #1f622f; }
+.status-disconnected { color: #8a111d; }
+
+#map {
+    height: 50vh;
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
