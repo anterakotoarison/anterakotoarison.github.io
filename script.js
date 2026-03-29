@@ -87,3 +87,35 @@ function shareStatus() {
 
     }, (err) => alert("Error getting location: " + err.message));
 }
+
+function onMessageArrived(message) {
+    try {
+        const data = JSON.parse(message.payloadString);
+        const [lon, lat] = data.geometry.coordinates;
+        const temp = data.properties.temperature;
+        updateMap(lat, lon, temp);
+    } catch (e) {
+        console.error("Error parsing MQTT message", e);
+    }
+}
+
+function updateMap(lat, lng, temp) {
+    let color = "green";
+    if (temp < 10) color = "blue";
+    else if (temp >= 30) color = "red";
+
+    const icon = L.divIcon({
+        html: `<svg width="30" height="30"<circle cx="15" cy="15" r="10" fill="${color}" strong="white" stroke-width="2"/></svg>`,
+        className: '',
+        iconSize: [30, 30]
+    })
+
+    if (marker) {
+        marker.setLatLng([lat, lng]).setIcon(icon);
+    } else {
+        marker = L.marker([lat, lng], { icon: icon }).addTo(map);
+    }
+
+    marker.bindPopup(`<b>Temp:</b> ${temp} C`).openPopup();
+    map.flyTo([lat, lng], 15);
+}

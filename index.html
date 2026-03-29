@@ -20,11 +20,14 @@
             <input type="number" id="port" placeholder="Port" value="8080">
             <button id="connectBtn" onclick="toggleConnection()">Start Connection</button>
         </section>
-    </main>
-    
-    
 
-    
+        <section class ="actions">
+            <button id="shareBtn" onclick="shareStatus()" disabled>Share My Status</button>
+            <div id="statusMsg" class="status-disconnected">Status: Disconnected</div>
+        </section>
+    </main>
+
+    <div id="map"></div>    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
