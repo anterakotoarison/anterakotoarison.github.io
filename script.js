@@ -70,10 +70,26 @@ function endConnect() {
     updateUI(false);
 }
 
+function publishAny() {
+    const customTopic = document.getElementById('customTopic').value;
+    const customMsg = document.getElementById('customMsg').value;
+
+    if (!customTopic || !customMsg) {
+        return alert("Please enter both a topic and a message!");
+    }
+
+    const message = new Paho.MQTT.Message(customMsg);
+    message.destinationName = customTopic;
+    client.send(message);
+    
+    console.log(`Published "${customMsg}" to "${customTopic}"`);
+}
+
 function updateUI(connected) {
     document.getElementById('host').disabled = connected;
     document.getElementById('port').disabled = connected;
     document.getElementById('shareBtn').disabled = !connected;
+    document.getElementById('pubBtn').disabled = !connected;
     
     const statusMsg = document.getElementById('statusMsg');
     const connectBtn = document.getElementById('connectBtn');

@@ -25,6 +25,14 @@
             <div id="statusMsg" class="status-disconnected">Status: Disconnected</div>
         </div>
 
+        <section class="controls manual-publish">
+            <h4>Manual Publish</h4>
+            <div class="input-group">
+                <input type="text" id="customTopic" placeholder="Any Topic (e.g. uofc/test)">
+                <input type="text" id="customMsg" placeholder="Your Message">
+            </div>
+            <button id="pubBtn" onclick="publishAny()" disabled>Publish to Topic</button>
+    </section>
         <div id="map"></div>
     </div>
 
