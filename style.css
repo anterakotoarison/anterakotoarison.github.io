@@ -12,7 +12,7 @@ body {
 }
 
 .controls {
-    background: white;
+    background: rgb(187, 26, 26);
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
