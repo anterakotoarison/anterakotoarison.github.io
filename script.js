@@ -75,21 +75,41 @@ function publishAny() {
     const customMsg = document.getElementById('customMsg').value;
 
     if (!customTopic || !customMsg) {
-        return alert("Please enter both a topic and a message!");
+        alert("Please enter both a topic and a message!");
+        return;
     }
 
-    const message = new Paho.MQTT.Message(customMsg);
-    message.destinationName = customTopic;
-    client.send(message);
-    
-    console.log(`Published "${customMsg}" to "${customTopic}"`);
+    // Check if client exists and is actually connected
+    if (client && client.isConnected()) {
+        const message = new Paho.MQTT.Message(customMsg);
+        message.destinationName = customTopic.trim(); // remove accidental spaces
+        client.send(message);
+        
+        console.log(`Published "${customMsg}" to "${customTopic}"`);
+        
+        // Visual feedback so you know it worked
+        const pubBtn = document.getElementById('pubBtn');
+        const originalText = pubBtn.innerText;
+        pubBtn.innerText = "Sent!";
+        setTimeout(() => pubBtn.innerText = originalText, 2000);
+        
+        // Clear the message box for the next test
+        document.getElementById('customMsg').value = "";
+    } else {
+        alert("Client is not connected. Please click 'Start Connection' first.");
+    }
 }
 
 function updateUI(connected) {
     document.getElementById('host').disabled = connected;
     document.getElementById('port').disabled = connected;
     document.getElementById('shareBtn').disabled = !connected;
-    document.getElementById('pubBtn').disabled = !connected;
+    
+    // This line MUST match the ID in your HTML
+    const pubBtn = document.getElementById('pubBtn');
+    if (pubBtn) {
+        pubBtn.disabled = !connected;
+    }
     
     const statusMsg = document.getElementById('statusMsg');
     const connectBtn = document.getElementById('connectBtn');
